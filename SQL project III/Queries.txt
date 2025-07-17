@@ -1,0 +1,53 @@
+/* Query 1 */
+SELECT g.name   AS Nombre,
+       Count(*) AS Cantidad
+FROM   invoice i
+       JOIN invoiceline il
+         ON i.invoiceid = il.invoiceid
+       JOIN track t
+         ON il.trackid = t.trackid
+       JOIN genre g
+         ON t.genreid = g.genreid
+WHERE  billingcity = "sidney"
+GROUP  BY g.name
+ORDER  BY cantidad DESC
+LIMIT  4 
+
+
+/* Query 2 */
+SELECT a.name        AS Nombre,
+       Count(g.name) AS Cantidad
+FROM   genre g
+       JOIN track t
+         ON g.genreid = t.genreid
+       JOIN album al
+         ON t.albumid = al.albumid
+       JOIN artist a
+         ON al.artistid = a.artistid
+WHERE  g.name = "rock"
+GROUP  BY a.name
+ORDER  BY cantidad DESC
+LIMIT  6 
+
+
+/* Query 3 */
+SELECT t1.name  AS Nombre,
+       Count(*) Cantidad
+FROM   artist t1
+       JOIN album t2
+         ON t1.artistid = t2.artistid
+GROUP  BY t1.artistid
+ORDER  BY cantidad DESC
+LIMIT  6 
+
+
+/* Query 4 */
+SELECT      p.name as playlistname,
+           COUNT(pt.trackid)  AS numberoftracks
+FROM       playlist p
+INNER JOIN playlisttrack pt
+ON         pt.playlistid = p.playlistid
+INNER JOIN track t
+ON         t.trackid = pt.trackid
+GROUP BY   playlistname
+ORDER BY   numberoftracks desc limit 7
